@@ -1,13 +1,11 @@
 import json
 
-import pymongo as pymongo
 from flask import Flask, request
 from carpoolyn.controllers.places_controller import *
 from carpoolyn.utils.mongo_client import init
 
 app = Flask(__name__)
 places = init().places
-# places.create_index([('address', pymongo.ASCENDING)])
 
 
 @app.route('/api/places', methods=['POST'])
