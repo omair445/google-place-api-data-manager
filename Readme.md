@@ -28,8 +28,8 @@ source venv/bin/activate
 ```flask run```
 
 
-#####Post: http://127.0.0.1:5000/api/places
-#####JSON Body:
+#### Post: http://127.0.0.1:5000/api/places
+#### JSON Body:
 ```python
 {
    "a":[
@@ -60,8 +60,8 @@ source venv/bin/activate
 }
 ```
 
-#####GET: http://127.0.0.1:5000/api/places
-#####Expected Response Body:
+#### GET: http://127.0.0.1:5000/api/places
+#### Expected Response Body:
 ```json
 {
     "data": [
@@ -232,5 +232,55 @@ FLASK_MONGO_PASSWORD=root
 FLASK_MONGO_USERNAME=root
 FLASK_MONGO_PORT=27017
 FLASK_MONGO_HOST=localhost
+
+```
+
+### Setup Gunicorn as Service ?
+```
+sudo nano /etc/systemd/system/gunicorn.service
+```
+
+### Paste the following
+```mysql
+[Unit]
+Description=gunicorn daemon
+After=network.target
+
+[Service]
+User=ubuntu
+Group=www-data
+WorkingDirectory=/home/ubuntu/google-place-api-data-manager
+ExecStart=bash start_app_server.sh
+
+[Install]
+WantedBy=multi-user.target
+```
+
+### Start the Service
+```mysql
+sudo systemctl start gunicorn
+```
+
+### Enable the service
+```mysql
+sudo systemctl enable gunicorn
+```
+
+### Nginx Reverse Proxy
+#### Install Nginx and edit the following file 
+```mysql
+/etc/nginx/sites-available/default
+```
+#### Then paste the following block
+```mysql
+
+server {
+  server_name               xxxxxx.xxxxx.xxxxx;
+  listen                    80;
+  location / {
+    proxy_pass              http://localhost:4400;
+    proxy_set_header        Host $host;
+  }
+}
 
 ```
