@@ -70,7 +70,11 @@ def get_cached_places_count(places, counters):
     place_api_counters = counters.find_one({
         'key': 'PLACE_API_CALL_COUNT'
     })
+    cached_place_api_counters = counters.find_one({
+        'key': 'CACHED_PLACE_API_CALL_COUNT'
+    })
     return success('success', {
         "total_cached_records": total_count,
-        "place_api_google_count": place_api_counters["value"]
+        "place_api_google_count": place_api_counters["value"],
+        "cached_place_api_count": cached_place_api_counters["value"]
     })
