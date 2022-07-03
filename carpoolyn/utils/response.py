@@ -5,9 +5,8 @@ def success(msg='', data=None):
     if data is None:
         data = []
     return jsonify({
-        'status': True,
+        'status': 200,
         'message': msg,
-        'status_code': 200,
         'total_count': len(data),
         'data': data
     })
