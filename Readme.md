@@ -6,6 +6,17 @@
 3) Python 3.9.13
 4) Docker
 
+## Install python and venv
+```bash
+apt-get install python3-pip python3-dev python3-venv
+```
+Above line is for Linux Ubuntu. It may vary for your OS
+
+## Create and activate venv
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
 ### How to Setup ?
 #### Fire up the docker container for Mongo DB
 ```cd docker && docker-compose up```
