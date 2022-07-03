@@ -1,6 +1,6 @@
 ## Google Places API Data Manager
 
-###Environments:
+### Dependencies:
 1) venv
 2) mongodb
 3) Python 3.9.13
@@ -269,7 +269,7 @@ sudo systemctl enable gunicorn
 ### Nginx Reverse Proxy
 #### Install Nginx and edit the following file 
 ```mysql
-/etc/nginx/sites-available/default
+nano /etc/nginx/sites-available/default
 ```
 #### Then paste the following block
 ```mysql
