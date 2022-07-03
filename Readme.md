@@ -1,6 +1,5 @@
 ## Google Places API Data Manager
 [![Places API Gateway](https://github.com/omair445/google-place-api-data-manager/actions/workflows/python-app.yml/badge.svg)](https://github.com/omair445/google-place-api-data-manager/actions/workflows/python-app.yml)
-[![Places API Gateway](https://github.com/omair445/google-place-api-data-manager/actions/workflows/python-app.yml/badge.svg?event=release)](https://github.com/omair445/google-place-api-data-manager/actions/workflows/python-app.yml)
 ### Dependencies:
 1) venv
 2) mongodb
