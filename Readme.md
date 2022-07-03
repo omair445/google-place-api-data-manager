@@ -281,3 +281,8 @@ server {
 }
 
 ```
+
+#### Login To mongo db container and connect to mongo shell using and then create unique index for places collection
+```mysql
+mongo -u root -p root
+```
