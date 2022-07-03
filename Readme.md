@@ -21,11 +21,8 @@ source venv/bin/activate
 #### Fire up the docker container for Mongo DB
 ```cd docker && docker-compose up```
 
-#### Install dependencies
-```pip install -r requirements.txt```
-
 #### Boot Flask Application
-```flask run```
+```bash start_app_server.sh```
 
 
 #### Post: http://127.0.0.1:5000/api/places
