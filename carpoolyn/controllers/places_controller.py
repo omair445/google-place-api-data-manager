@@ -45,3 +45,10 @@ def get_places(cursor, places):
         data = get_places_from_google(cursor)
         data = process_places(data, places)
     return success('success', data)
+
+
+def get_cached_places_count(places):
+    total_count = places.count_documents({})
+    return success('success', {
+        "count": total_count
+    })
