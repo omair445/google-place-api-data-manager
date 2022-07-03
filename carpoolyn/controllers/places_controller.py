@@ -18,6 +18,7 @@ def process_places(payload, places):
                 'predictions': address,
                 'created_at': datetime.datetime.utcnow()
             })
+            created_places.append(address)
         except Exception as error:
             if error.code == 11000:
                 created_places.append(address)
