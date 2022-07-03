@@ -12,12 +12,16 @@ permissions:
 
 jobs:
   build:
+    name: Deployment
     runs-on: ubuntu-latest
     steps:
-    - name: ls -a via ssh
-      uses: garygrossgarten/github-action-ssh@release
+    - name: Deploying Places Gateway
+      uses: appleboy/ssh-action@master
       with:
-        command: ls -a
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USER }}
-        privateKey: ${{ secrets.KEY}}
+        key: ${{ secrets.KEY }}
+        port: ${{ secrets.PORT }}
+        script: |
+          whoami
+          ls -al
