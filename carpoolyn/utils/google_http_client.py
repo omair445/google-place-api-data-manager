@@ -7,7 +7,7 @@ load_dotenv()
 
 
 def get_places_from_google(cursor: str, counters):
-    url = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=" + cursor + "&region=pk&key=" + str(
+    url = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=" + cursor + "&region=pak&key=" + str(
         os.environ.get(
             'FLASK_APP_GOOGLE_PLACES_API_KEY'))
 
