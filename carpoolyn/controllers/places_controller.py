@@ -29,9 +29,8 @@ def process_places(payload, places):
     return created_places
 
 
-def get_places(cursor, places):
+def get_places(cursor, places, counters):
     places_doc = []
-    response = None
     records = places.find({
         "address": {
             "$regex": cursor,
@@ -42,13 +41,36 @@ def get_places(cursor, places):
         places_doc.append(document['predictions'])
     data = json.loads(json_util.dumps(places_doc))
     if len(data) <= 1:
-        data = get_places_from_google(cursor)
+        data = get_places_from_google(cursor, counters)
         data = process_places(data, places)
+    else:
+        count_values = counters.find_one({
+            'key': 'CACHED_PLACE_API_CALL_COUNT'
+        })
+        if count_values:
+            counters.update_one({
+                '_id': count_values['_id']
+            }, {
+                '$set': {
+                    'key': 'CACHED_PLACE_API_CALL_COUNT',
+                    'value': count_values['value'] + 1
+                }
+            }, upsert=False)
+        else:
+            counters.insert_one({
+                'key': 'CACHED_PLACE_API_CALL_COUNT',
+                'value': 1
+            })
+
     return success('success', data)
 
 
-def get_cached_places_count(places):
+def get_cached_places_count(places, counters):
     total_count = places.count_documents({})
+    place_api_counters = counters.find_one({
+        'key': 'PLACE_API_CALL_COUNT'
+    })
     return success('success', {
-        "count": total_count
+        "total_cached_records": total_count,
+        "place_api_google_count": place_api_counters["value"]
     })
