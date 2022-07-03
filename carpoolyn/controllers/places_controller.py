@@ -30,39 +30,43 @@ def process_places(payload, places):
 
 
 def get_places(cursor, places, counters):
-    places_doc = []
-    records = places.find({
-        "address": {
-            "$regex": cursor,
-            "$options": "i"
-        }
-    }).limit(10)
-    for document in records:
-        places_doc.append(document['predictions'])
-    data = json.loads(json_util.dumps(places_doc))
-    if len(data) <= 1:
-        data = get_places_from_google(cursor, counters)
-        data = process_places(data, places)
-    else:
-        count_values = counters.find_one({
-            'key': 'CACHED_PLACE_API_CALL_COUNT'
-        })
-        if count_values:
-            counters.update_one({
-                '_id': count_values['_id']
-            }, {
-                '$set': {
-                    'key': 'CACHED_PLACE_API_CALL_COUNT',
-                    'value': count_values['value'] + 1
-                }
-            }, upsert=False)
-        else:
-            counters.insert_one({
-                'key': 'CACHED_PLACE_API_CALL_COUNT',
-                'value': 1
-            })
+    try:
 
-    return success('success', data)
+        places_doc = []
+        records = places.find({
+            "address": {
+                "$regex": cursor,
+                "$options": "i"
+            }
+        }).limit(10)
+        for document in records:
+            places_doc.append(document['predictions'])
+        data = json.loads(json_util.dumps(places_doc))
+        if len(data) <= 1:
+            data = get_places_from_google(cursor, counters)
+            data = process_places(data, places)
+        else:
+            count_values = counters.find_one({
+                'key': 'CACHED_PLACE_API_CALL_COUNT'
+            })
+            if count_values:
+                counters.update_one({
+                    '_id': count_values['_id']
+                }, {
+                    '$set': {
+                        'key': 'CACHED_PLACE_API_CALL_COUNT',
+                        'value': count_values['value'] + 1
+                    }
+                }, upsert=False)
+            else:
+                counters.insert_one({
+                    'key': 'CACHED_PLACE_API_CALL_COUNT',
+                    'value': 1
+                })
+
+        return success('success', data)
+    except Exception :
+        return success('success')
 
 
 def get_cached_places_count(places, counters):
