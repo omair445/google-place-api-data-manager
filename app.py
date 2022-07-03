@@ -1,9 +1,11 @@
 from flask import Flask, request
+from flask_cors import CORS
 
 from carpoolyn.controllers.places_controller import *
 from carpoolyn.utils.mongo_client import init
 
 app = Flask(__name__)
+CORS(app)
 places = init().places
 counters = init().counters
 
